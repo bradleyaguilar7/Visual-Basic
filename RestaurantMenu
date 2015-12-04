@@ -1,0 +1,160 @@
+
+    Dim tax, subTotal, total As Decimal
+
+    Dim taxRate As Decimal = 0.0
+    Dim priceHamburger As Decimal = 3.0
+    Dim priceBacon As Decimal = 0.5
+    Dim priceCheese As Decimal = 0.5
+    Dim priceChickenSandwich As Decimal = 3.0
+    Dim priceLettuce As Decimal = 0.25
+    Dim priceMayo As Decimal = 0.25
+    Dim priceHotDog As Decimal = 2.5
+    Dim priceHotDogwithbacon As Decimal = 3.0
+    Dim priceHotDogwithmustard As Decimal = 2.5
+    Dim pricePizza As Decimal = 1.5
+    Dim pricePineapplePizza As Decimal = 5.0
+    Dim pricePepperoniPizza As Decimal = 6.0
+    Dim priceSalad As Decimal = 3.0
+    Dim priceFries As Decimal = 2.5
+    Dim priceOnionRings As Decimal = 2.5
+    Dim priceBuffaloWings As Decimal = 4.5
+    Dim priceSoda As Decimal = 2.0
+    Dim priceWater As Decimal = 1.5
+    Dim priceIcedTea As Decimal = 3.5
+    Dim priceCoffee As Decimal = 2.5
+
+
+    Private Sub Form1_Load(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles MyBase.Load
+
+        initializeVariables()
+        clearTheCustomerSelections()
+        clearReceipt()
+
+    End Sub
+
+
+    Private Sub initializeVariables()
+
+        subtotal = 0
+        tax = 0
+        total = 0
+
+    End Sub
+    Private Sub clearTheCustomerSelections() 'for each new customer
+
+        btnNoneMainItems.Checked = True
+        btnNoneFoodSides.Checked = True
+        btnCheese.Checked = False
+        btnBacon.Checked = False
+        btnLettuce.Checked = False
+        btnMayo.Checked = False
+        btnPepperoni.Checked = False
+        btnPineapple.Checked = False
+        btnhotdogbacon.Checked = False
+        btnhotdogmustard.Checked = False
+        btnCoffee.Checked = False
+        btnSoda.Checked = False
+        btnIcedTea.Checked = False
+        btnWater.Checked = False
+
+    End Sub
+
+
+    Private Sub computerCurrentSelections()
+
+        'If Hamburger Item was selected
+        If btnHamburger.Checked Then
+            subTotal += priceHamburger
+
+            Dim hamburgerItem As String = priceHamburger.ToString("C") & "Hamburger"
+            ListBoxDisplay.Items.Add(hamburgerItem)
+        End If
+
+        'If chicken sandwich Item was selected
+        If btnchickensandwich.Checked Then
+            subTotal += priceChickenSandwich
+
+            Dim chickenSandwichItem As String = priceChickenSandwich.ToString("C") & " Chicken Sandwich"
+            ListBoxDisplay.Items.Add(chickenSandwichItem)
+        End If
+
+        If btnhotdog.Checked Then
+            subTotal += priceHotDog
+
+            Dim HotDogItem As String = priceHotDog.ToString("C") & " HotDog "
+            ListBoxDisplay.Items.Add(HotDogItem)
+        End If
+
+        If btnpizza.Checked Then
+            subTotal += pricePizza
+
+            Dim pizzaItem As String = pricePizza.ToString("C") & " pizza "
+            ListBoxDisplay.Items.Add(pizzaItem)
+        End If
+
+        If btncheese.Checked Then
+            subTotal += priceCheese
+
+            Dim cheeseItem As String = priceCheese.ToString("C") & " cheese "
+            ListBoxDisplay.Items.Add(cheeseItem)
+        End If
+
+        If btnbacon.Checked Then
+            subTotal += priceBacon
+
+            Dim baconItem As String = priceBacon.ToString("C") & " bacon "
+            ListBoxDisplay.Items.Add(baconItem)
+        End If
+
+        If btnhotdog.Checked Then
+            subTotal += priceHotDog
+
+            Dim HotDogItem As String = priceHotDog.ToString("C") & " HotDog "
+            ListBoxDisplay.Items.Add(HotDogItem)
+        End If
+    End Sub
+    Private Sub clearReceipt() 'for each new customer
+
+        ListBoxDisplay.Items.Clear() 'clear the customer checked
+        ListBoxTotal.Items.Clear()
+
+    End Sub
+
+    Private Sub btnClear_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles btnClear.Click
+
+        initializeVariables()
+        clearTheCustomerSelections()
+        clearReceipt()
+    End Sub
+    Private Sub btnAddToCart_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles btnAddToCart.Click
+
+        computeCurrentSelection()
+        updateTotal()
+        clearTheCustomerSelections()
+
+
+    End Sub
+    Private Sub btnPay_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles btnPay.Click
+        Me.Close()
+
+    End Sub
+    Private Sub updateTotal()
+
+        'Clear the previous subtotal, tax and total
+        ListBoxTotal.Items.Clear()
+
+        'Compute and display the subtotal
+        ListBoxTotal.Items.Add("SUB TOTAL = " & subTotal.ToString("C"))
+
+        'Compute and display the tax
+        tax = subTotal * taxRate
+        ListBoxTotal.Items.Add("             TAX = " & tax.ToString("C"))
+
+        'Compute and display the total
+        total = subTotal + tax
+        ListBoxTotal.Items.Add("        TOTAL = " & total.ToString("C"))
+
+        'Separate each person's order on the receipt
+        ListBoxDisplay.Items.Add("------------------------")
+
+    End Sub
